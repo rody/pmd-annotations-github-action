@@ -18,10 +18,10 @@ type File struct {
 }
 
 type Violation struct {
-	BeginLine       int32  `json:"beginLine"`
-	BeginColumn     int32  `json:"beginColumn"`
-	EndLine         int32  `json:"endLine"`
-	EndColumn       int32  `json:"endColumn"`
+	BeginLine       int  `json:"beginLine"`
+	BeginColumn     int  `json:"beginColumn"`
+	EndLine         int  `json:"endLine"`
+	EndColumn       int  `json:"endColumn"`
 	Description     string `json:"description"`
 	Rule            string `json:"rule"`
 	Ruleset         string `json:"ruleset"`

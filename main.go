@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/rody/pmd-annotations-github-action/pmd"
@@ -50,7 +51,8 @@ func main() {
 			violationCount += 1
 			action := githubactions.WithFieldsMap(map[string]string{
 				"file": relPath,
-				"line": string(v.BeginLine),
+				"line": strconv.Itoa(v.BeginLine),
+				"column": strconv.Itoa(v.BeginColumn),
 				"title": v.Rule,
 			})
 
