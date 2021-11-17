@@ -16,7 +16,7 @@ var (
 	dir              string
 	reportfile       string
 	minErrorPriority int
-	failOnError bool
+	failOnError      bool
 )
 
 func main() {
@@ -24,8 +24,10 @@ func main() {
 	flag.StringVar(&reportfile, "reportfile", "", "")
 	flag.IntVar(&minErrorPriority, "min-error-priority", 0, "")
 	flag.BoolVar(&failOnError, "fail-on-error", false, "")
-
 	flag.Parse()
+
+	githubactions.Debugf("minErrorPriority: %d", minErrorPriority)
+	githubactions.Debugf("failOnError: %b", failOnError)
 
 	if reportfile == "" {
 		githubactions.Fatalf("missing input 'reportfile'")
@@ -50,10 +52,10 @@ func main() {
 		for _, v := range f.Violations {
 			violationCount += 1
 			action := githubactions.WithFieldsMap(map[string]string{
-				"file": relPath,
-				"line": strconv.Itoa(v.BeginLine),
+				"file":   relPath,
+				"line":   strconv.Itoa(v.BeginLine),
 				"column": strconv.Itoa(v.BeginColumn),
-				"title": v.Description,
+				"title":  v.Description,
 			})
 
 			msg := fmt.Sprintf("%s (priority: %d)\n%s", v.Rule, v.Priority, v.ExternalInfoUrl)
