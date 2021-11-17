@@ -56,7 +56,7 @@ func main() {
 				"title": v.Description,
 			})
 
-			msg := fmt.Sprintf("%s (priority: %d)\n[More Info](%s)", v.Rule, v.Priority, v.ExternalInfoUrl)
+			msg := fmt.Sprintf("%s (priority: %d)\n%s", v.Rule, v.Priority, v.ExternalInfoUrl)
 			if v.Priority > minErrorPriority {
 				warningCount += 1
 				action.Warningf(msg)
