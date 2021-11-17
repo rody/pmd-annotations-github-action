@@ -31,7 +31,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://rawdee/pmd-annotations-github-action:latest'
   args:
     - --reportfile
     - ${{ inputs.reportfile }}
