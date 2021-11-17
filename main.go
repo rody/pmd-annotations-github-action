@@ -26,9 +26,6 @@ func main() {
 	flag.BoolVar(&failOnError, "fail-on-error", false, "")
 	flag.Parse()
 
-	githubactions.Debugf("minErrorPriority: %d", minErrorPriority)
-	githubactions.Debugf("failOnError: %b", failOnError)
-
 	if reportfile == "" {
 		githubactions.Fatalf("missing input 'reportfile'")
 	}

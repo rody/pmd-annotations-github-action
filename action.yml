@@ -16,6 +16,7 @@ inputs:
       This value should be the same as the value given to `-dir` during
       the report creation.
     required: false
+    default: ''
   min-error-priority:
     description: |
       From 1 (highest) to 5 (lowest). Violations with a higher priority than
@@ -32,13 +33,13 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - -reportfile
+    - --reportfile
     - ${{ inputs.reportfile }}
-    - ${{ inputs.dir && '-dir' }}
+    - --dir
     - ${{ inputs.dir }}
-    - -min-error-priority
+    - --min-error-priority
     - ${{ inputs.min-error-priority }}
-    - ${{ inputs.fail-on-error && '-fail-on-error' }}
+    - ${{ inputs.fail-on-error && '--fail-on-error' }}
 
 branding:
   icon: 'flag'
