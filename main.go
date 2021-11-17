@@ -14,13 +14,13 @@ import (
 var (
 	dir string
 	reportfile string
-	format string
-	shortnames bool
+	minErrorPriority int
 )
 
 func main() {
 	flag.StringVar(&dir, "dir", "", "")
 	flag.StringVar(&reportfile, "reportfile", "", "")
+	flag.IntVar(&minErrorPriority, "min-error-priority", 1, "")
 
 	flag.Parse()
 
@@ -43,7 +43,12 @@ func main() {
 		githubactions.Group(fmt.Sprintf("PMD %s: errors=%d", relPath, len(f.Violations)))
 		for _, v := range f.Violations {
 			violationCount += 1
-			githubactions.Errorf("file=%s,line=%d,col%d::[%s] %s", relPath, v.BeginLine, v.BeginColumn, v.Rule, v.Description)
+			annotation := fmt.Sprintf("file=%s,line=%d::[%s] %s", relPath, v.BeginLine, v.Rule, v.Description)
+			if (v.Priority > minErrorPriority) {
+				githubactions.Warningf(annotation)
+			} else {
+				githubactions.Errorf(annotation)
+			}
 		}
 		githubactions.EndGroup()
 	}

@@ -16,6 +16,13 @@ inputs:
       This value should be the same as the value given to `-dir` during
       the report creation.
     required: false
+  min-error-priority:
+    description: |
+      From 1 (highest) to 5 (lowest). Violations with a higher priority than
+      this value will be reported as errors, the other ones will be reported
+      as warnings. Default to 5 (every violation is considered as an error)
+    required: false
+    default: '5'
 
 runs:
   using: 'docker'
@@ -25,6 +32,8 @@ runs:
     - ${{ inputs.reportfile }}
     - ${{ inputs.dir && '-dir' }}
     - ${{ inputs.dir }}
+    - -min-error-priority
+    - ${{ inputs.min-error-priority }}
 
 branding:
   icon: 'flag'

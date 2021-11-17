@@ -25,7 +25,7 @@ type Violation struct {
 	Description     string `json:"description"`
 	Rule            string `json:"rule"`
 	Ruleset         string `json:"ruleset"`
-	Priority        int8   `json:"priority"`
+	Priority        int   `json:"priority"`
 	ExternalInfoUrl string `json:"externalInfoUrl"`
 }
 
