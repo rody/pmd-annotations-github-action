@@ -53,15 +53,16 @@ func main() {
 				"file": relPath,
 				"line": strconv.Itoa(v.BeginLine),
 				"column": strconv.Itoa(v.BeginColumn),
-				"title": v.Rule,
+				"title": v.Description,
 			})
 
+			msg := fmt.Sprintf("%s (priority: %d)\n[More Info](%s)", v.Rule, v.Priority, v.ExternalInfoUrl)
 			if v.Priority > minErrorPriority {
 				warningCount += 1
-				action.Warningf(v.Description)
+				action.Warningf(msg)
 			} else {
 				errorCount += 1
-				action.Errorf(v.Description)
+				action.Errorf(msg)
 			}
 		}
 		githubactions.EndGroup()
