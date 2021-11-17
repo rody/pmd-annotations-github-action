@@ -1,0 +1,27 @@
+name: "PMD Annotate Source Code"
+description: "Creates code annotations from a PMD report"
+author: "Rodolphe Blancho"
+
+inputs:
+  reportfile:
+    description: |
+      Location of the report file relative to the project root.
+      This action supports only reports using the JSON format.
+    required: true
+    default: 'pmd-report.json'
+  dir:
+    description: |
+      Required if the report was created using the `-shortnames` option and
+      the `-dir` option was set to a different value.
+      This value should be the same as the value given to `-dir` during
+      the report creation.
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - -reportfile
+    - ${{ inputs.reportfile }}
+    - ${{ inputs.dir && -dir }}
+    - ${{ inputs.dir }}
