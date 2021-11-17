@@ -45,18 +45,24 @@ func main() {
 			githubactions.Fatalf("could not get path of file ''%s': %s", f.Filename, err)
 		}
 
+		githubactions.Group(fmt.Sprintf("%s: violations=%d", relPath, len(f.Violations)))
 		for _, v := range f.Violations {
 			violationCount += 1
-			annotation := fmt.Sprintf("file=%s,line=%d,title=%s::%s", relPath, v.BeginLine, v.Rule, v.Description)
+			action := githubactions.WithFieldsMap(map[string]string{
+				"file": relPath,
+				"line": string(v.BeginLine),
+				"title": v.Rule,
+			})
 
 			if v.Priority > minErrorPriority {
 				warningCount += 1
-				githubactions.Warningf(annotation)
+				action.Warningf(v.Description)
 			} else {
 				errorCount += 1
-				githubactions.Errorf(annotation)
+				action.Errorf(v.Description)
 			}
 		}
+		githubactions.EndGroup()
 	}
 
 	if violationCount == 0 {
