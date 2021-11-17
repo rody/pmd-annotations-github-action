@@ -23,5 +23,5 @@ runs:
   args:
     - -reportfile
     - ${{ inputs.reportfile }}
-    - ${{ inputs.dir && -dir }}
+    - ${{ inputs.dir && '-dir' }}
     - ${{ inputs.dir }}
