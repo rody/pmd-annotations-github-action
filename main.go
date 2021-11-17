@@ -38,13 +38,13 @@ func main() {
 	violationCount := 0
 	warningCount := 0
 	errorCount := 0
+
 	for _, f := range report.Files {
 		relPath, err := relpath(f.Filename)
 		if err != nil {
 			githubactions.Fatalf("could not get path of file ''%s': %s", f.Filename, err)
 		}
 
-		githubactions.Group(fmt.Sprintf("PMD %s: violations=%d", relPath, len(f.Violations)))
 		for _, v := range f.Violations {
 			violationCount += 1
 			annotation := fmt.Sprintf("file=%s,line=%d,title=%s::%s", relPath, v.BeginLine, v.Rule, v.Description)
@@ -57,7 +57,6 @@ func main() {
 				githubactions.Errorf(annotation)
 			}
 		}
-		githubactions.EndGroup()
 	}
 
 	if violationCount == 0 {
