@@ -25,3 +25,7 @@ runs:
     - ${{ inputs.reportfile }}
     - ${{ inputs.dir && '-dir' }}
     - ${{ inputs.dir }}
+
+branding:
+  icon: 'flag'
+  color: 'red'
